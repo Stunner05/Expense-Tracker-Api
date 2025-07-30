@@ -26,7 +26,7 @@ routes.delete('user/delete', authChecker, deleteProfile)
 routes.get('/income/:limit/:page', authChecker, incomeGet)
 routes.get('/income/:incomeId', authChecker, incomeIdGet)
 routes.post('/income', authChecker, incomePost)
-routes.put('/income/:incomeId', authChecker,incomePut)
+routes.put('/income/:incomeId', authChecker,incomePut);
 routes.delete('/income/:incomeId', authChecker, incomeDelete)
 
 //=============== Expenses Routes ==================

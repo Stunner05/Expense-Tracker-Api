@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose")
 const { Income } = require("../model")
 
+
 const incomeGet = async (req, res) =>{
     try {
        
@@ -57,6 +58,7 @@ const incomeIdGet = async (req, res) =>{
 const incomePost = async( req, res) =>{
     try {
         const userId = req.user_id
+        console.log("api post",req.body)
         const {name, status, amount, source, description } = req.body
         if(!name || !status || !amount || !source || !description) return res.status(400).json({status: false, message: "Invalid payload"})
         const income = await Income.create({name, status, amount, source, description, user: userId})
@@ -75,8 +77,8 @@ const incomePut = async (req, res) =>{
         const userId = req.user_id
         const payload = req.body
         const {incomeId}  = req.params
-        const incomeExist = await Income.findOne({user: userId, _id:incomeId})
-        if(!incomeExist) return res.status(203).json({status: true, message: 'no income record found to be updated', data: {}})
+        const incomeExist = await Income.findOne({user: userId, _id:incomeId});
+        if(!incomeExist) return res.status(203).json({status: true, message: 'no income record found to be updated', data: {}});
         const updateIncome = await Income.findByIdAndUpdate(incomeId, {...payload})
         if(updateIncome) return res.status(200).json({status: true, message: 'Income record Updated', data: updateIncome})
         else return res.status(203).json({status: true, message: 'could not update income record', data: {}})
