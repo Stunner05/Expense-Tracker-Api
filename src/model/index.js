@@ -56,7 +56,7 @@ const incomeModel = new Schema({
     },
     description:{
         type: String,
-        max_length: 300 
+        max_length: 300
     },
     amount: {
         type: Number,
@@ -101,6 +101,15 @@ const expensesCategory = new Schema(({
         trim: true
     }
 }))
+
+const BudjetModel = new Schema(({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+    
+}))
 const profileModel = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -125,7 +134,7 @@ const ExpenseCategory = mongoose.model('expense_category', expensesCategory)
 
 
 module.exports = {
-    Oauth, 
+    Oauth,
     Reset,
     Profile,
     Expenses,
