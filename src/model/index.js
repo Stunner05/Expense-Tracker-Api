@@ -108,7 +108,7 @@ const BudjetModel = new Schema(({
         ref: 'user',
         required: true
     },
-    
+
 }))
 const profileModel = new Schema({
     user: {
@@ -121,17 +121,12 @@ const profileModel = new Schema({
         type: String,
     }
 }, {timestamps: true})
-
-
 const Oauth = mongoose.model('Oauth_access_token', oauthSchema)
 const Reset = mongoose.model('reset', resetModel)
 const Profile = mongoose.model('profile', profileModel)
 const Expenses = mongoose.model('expense', expensesModel)
 const Income = mongoose.model('income', incomeModel)
 const ExpenseCategory = mongoose.model('expense_category', expensesCategory)
-
-
-
 
 module.exports = {
     Oauth,

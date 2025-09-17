@@ -1,4 +1,8 @@
 const { Router } = require("express");
+const multer = require("multer");
+const {storage} = require("../cloudinary");
+const upload = multer({ storage });
+
 const {
 	register,
 	login,
@@ -43,7 +47,7 @@ routes.post("/auth/verify-account", verifyEmailCode);
 
 //============ user routes ==============
 routes.get("/user/me", authChecker, me);
-routes.post("/user/add", authChecker, setProfile);
+routes.post("/user/add", upload.single("image"), authChecker, setProfile);
 routes.put("/user/update", authChecker, updateProfile);
 routes.delete("user/delete", authChecker, deleteProfile);
 

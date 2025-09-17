@@ -3,6 +3,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 const xss = require('xss')
 const config = require('../config')
+const multer = require("multer");
+const upload = multer();
 const routes = require('./routes/index')
 
 const app = express()

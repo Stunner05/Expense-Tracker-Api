@@ -23,13 +23,13 @@ const register = async (req,res) =>{
         userData.email = payload.email
 
         const user = await User.create(userData)
-        const userDetails = {} 
+        const userDetails = {}
         userDetails.email = user.email,
         userDetails.lastname = user.lastname,
         userDetails.firstname = user.firstname,
         userDetails._id = user._id,
         userDetails.verified = user.verfied
-       
+
         const expires = new Date(Date.now() +  3*30*24*60*60*1000)
         if(user){
             const token = generateToken(userDetails)
@@ -46,7 +46,7 @@ const register = async (req,res) =>{
             .replaceAll('{{siteName}}', siteName)
             await sendEmail(userDetails.email, 'Verify account',signupEmail )
             return res.status(200).json({
-                status: true, 
+                status: true,
                 message: 'user created, chek email for verification',
                 data: {userDetails, token}
             })
@@ -96,6 +96,7 @@ const login = async (req, res) =>{
     }
 }
 
+
 const logout = async (req, res) =>{
     try{
         const userId = req.user_id
@@ -114,13 +115,13 @@ const logout = async (req, res) =>{
             message: error.message || 'Internal server error'
         })
     }
-} 
+}
 
 const verifyEmailCode = async (req,res) =>{
     try{
         const {email, otp} = req.body
         if(!email || !otp ) return res.status(400).json({status: false, message: 'Invalid payload'})
-        const validOTP  = await Reset.findOne({email, otp}) 
+        const validOTP  = await Reset.findOne({email, otp})
         const user = await User.findOne({email})
         if(user.verfied) return res.status(203).json({status: true, message: 'User ia already verified'})
         if(!validOTP) return res.status(203).json({status: true, message:'invalid otp'})
@@ -133,28 +134,25 @@ const verifyEmailCode = async (req,res) =>{
     }
     catch(error){
         return res.status(500).json({
-            status: false, 
+            status: false,
             message: error.message || 'Internal server error'
         })
     }
 }
 const forgotPassword = async(req, res) =>{
-    
+
     try{
         const {email, password, otp} = req.body
         if(email, !password, !otp){
             const emailExist = await User.findOne({email})
             if(!emailExist) return res.status(400).json({status: false, message: 'A otp was sent to the email provided'})
-            
             const otp = Math.floor(100000 + Math.random() * 999999)
             const expire_in = new Date(Date.now() + 30 * 60 * 1000) //  expires in 30 mins
             await Reset.create({email, otp, expire_in})
             const forgotEmail = forgottenEmail.replace('{{code}}', otp).replace('{{name}}', emailExist.firstname)
                                 .replaceAll('{{siteName}}', siteName)
             await sendEmail(emailExist.email, 'Forgotten Password', forgotEmail)
-
             return res.status(200).json({status: true, message: 'An otp was sent to the provided email'})
-            
         }
         if(email, otp, !password){
             const validOtp = await Reset.findOne({email, otp})
@@ -163,7 +161,6 @@ const forgotPassword = async(req, res) =>{
             return res.status(200).json({status: true, message: 'otp verified, setp 2'})
         }
         if(email, otp, password){
-           
             const validOtp = await Reset.findOne({email, otp})
             if(!validOtp) return res.status(401).json({status: false, message: 'Inalid otp'})
             if(Date.now > validOtp.expire_in) return res.status(401).json({status: false, message: 'Expired otp'})
@@ -171,7 +168,6 @@ const forgotPassword = async(req, res) =>{
             const updateData = {}
             updateData.email = email
             updateData.password = encryptedPassword
-
             const updated = await User.findOneAndUpdate({email: updateData.email}, {$set: updateData})
             const resetEmail = resetPassEmail.replace('{{name}}', updated.firstname).replaceAll('{{siteName}}', siteName)
             await sendEmail(updated.email, 'Password reset sucessful ', resetEmail)
@@ -188,7 +184,7 @@ const forgotPassword = async(req, res) =>{
     }
     catch(error){
         return res.status(500).json({
-            status: false, 
+            status: false,
             message: error.message || 'Internal server error'
         })
     }

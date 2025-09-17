@@ -37,6 +37,7 @@ const expenseGet = async (req, res) => {
 			},
 		]);
 		const totalExpenseAmount = totalAmount[0]?.totalAmount || 0;
+				console.log("🚀 ~ expenseGet ~ totalCount:", totalCount)
 		return res.status(200).json({
 			status: true,
 			message: "Expense fetched",
@@ -132,6 +133,8 @@ const expensePost = async (req, res) => {
 	}
 };
 const expensePut = async (req, res) => {
+	console.log(req.body)
+	console.log("headers", req.headers)
 	try {
 		const userId = req.user_id;
 		const payload = req.body;

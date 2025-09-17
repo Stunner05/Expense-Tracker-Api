@@ -14,7 +14,7 @@ const hashPassword = async (password) =>{
 const comparePassord = async (password,dbPassword) =>{
     return await bcrypt.compare(password, dbPassword)
 }
-const generateToken = (userdata) =>{
+const  generateToken = (userdata) =>{
     return jwt.sign(userdata, config.jwt_secret);
 }
 
@@ -29,7 +29,7 @@ const saveToken  = async (token,user_id, expire_in,save = null) =>{
         const update = {
             expire_in,
             token
-        } 
+        }
         if(save){
             await Oauth.updateOne(
                 {_id: check._id},
@@ -50,14 +50,14 @@ const saveToken  = async (token,user_id, expire_in,save = null) =>{
 const sendEmail = async (email, subject,content) =>{
     const mailOption = {
         from: siteName,
-        to: email, 
+        to: email,
         subject: subject,
         html: content
     }
 
     try {
         const sendmail = await config.transporter.sendMail(mailOption);
-        return sendmail.accepted.length > 0; 
+        return sendmail.accepted.length > 0;
       } catch (error) {
         console.error('Email sending failed:', error);
         return false;
