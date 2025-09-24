@@ -11,6 +11,11 @@ const app = express()
 
 app.get("/favicon.ico", (req, res) => res.status(204).end());
 
+app.get("/ping", (req, res) => {
+	res.json({ message: "pong" });
+});
+
+
 app.use(cors({
     // origin: config.frontrnd_uri,
     methods: ['GET', 'PATCH','PUT', 'POST', 'DELETE']
