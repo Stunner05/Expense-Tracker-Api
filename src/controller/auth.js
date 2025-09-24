@@ -31,6 +31,7 @@ let welcome = fs.readFileSync(
 	"utf-8"
 );
 const register = async (req, res) => {
+	res.json({ message: "registr" });
     console.log("income signup controller");
 
 	try {
