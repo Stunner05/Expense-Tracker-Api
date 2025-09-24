@@ -15,6 +15,9 @@ app.get("/ping", (req, res) => {
 	res.json({ message: "pong" });
 });
 
+app.get("/api/test", (req, res) => res.json({ ok: true }));
+
+
 
 app.use(cors({
     // origin: config.frontrnd_uri,
