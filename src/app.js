@@ -27,5 +27,5 @@ app.use((req, res, next) =>{
     console.log(req.path, req.method)
     next()
 })
-app.use('/api', routes)
+app.use('/', routes)
 module.exports = app
