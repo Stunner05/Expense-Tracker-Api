@@ -1,3 +1,6 @@
+const { port, db_connect } = require('./config')
+const app = require('./src/app')
+
 if (process.env.NODE_ENV !== "production") {
 	const { port, db_connect } = require("./config");
 	db_connect().then(() => {
