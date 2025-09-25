@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "seed": "node config/seed.js"
+    "seed": "node config/seed.js",
+    "vercel-start": "node "
   },
   "author": "",
   "license": "ISC",
